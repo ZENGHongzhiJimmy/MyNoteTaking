@@ -8,6 +8,7 @@ A modern, responsive web application for managing personal notes with a beautifu
 - **Edit Notes**: Update existing notes with real-time editing
 - **Delete Notes**: Remove notes you no longer need
 - **Search Notes**: Find notes quickly by searching titles and content
+- **Translate Notes**: Translate note titles and content into Simplified Chinese or Japanese
 - **Auto-save**: Notes are automatically saved as you type
 - **Responsive Design**: Works perfectly on desktop and mobile devices
 - **Modern UI**: Beautiful gradient design with smooth animations
@@ -96,6 +97,9 @@ notetaking-app/
 - `PUT /api/notes/<id>` - Update a note
 - `DELETE /api/notes/<id>` - Delete a note
 - `GET /api/notes/search?q=<query>` - Search notes
+- `POST /api/translate` - Translate a note title and content into a supported language
+
+Translation requests accept `title`, `content`, and `target_language` fields. The target language must be `Chinese (Simplified)` or `Japanese`.
 
 ### Request/Response Format
 ```json
@@ -156,6 +160,7 @@ The application is configured for easy deployment with:
 ### Environment Variables
 - `FLASK_ENV`: Set to `development` for debug mode
 - `SECRET_KEY`: Flask secret key for sessions
+- `API`: OpenRouter API key, read by the backend from the root `.env` file or process environment for note translation using OpenRouter's free-model router. Keep `.env` private; the key is never sent to the browser.
 
 ### Database Configuration
 - Database file: `src/database/app.db`
@@ -205,4 +210,3 @@ Potential improvements for future versions:
 ---
 
 **Built with ❤️ using Flask, SQLite, and modern web technologies**
-
