@@ -21,10 +21,13 @@ CORS(app)
 app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(note_bp, url_prefix='/api')
 app.register_blueprint(translation_bp, url_prefix='/api')
-# configure database to use repository-root `database/app.db`
+# Use Vercel's writable temporary directory in serverless deployments.
 ROOT_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-DB_PATH = os.path.join(ROOT_DIR, 'database', 'app.db')
-# ensure database directory exists
+if os.environ.get('VERCEL'):
+    DB_PATH = '/tmp/app.db'
+else:
+    DB_PATH = os.path.join(ROOT_DIR, 'database', 'app.db')
+
 os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{DB_PATH}"

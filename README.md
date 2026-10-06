@@ -149,11 +149,16 @@ CREATE TABLE note (
 
 ## 🚀 Deployment
 
-The application is configured for easy deployment with:
-- CORS enabled for cross-origin requests
-- Host binding to `0.0.0.0` for external access
-- Production-ready Flask configuration
-- Persistent SQLite database
+### Deploy to Vercel
+
+1. Push the repository to GitHub and import it as a project in Vercel.
+2. Leave the build and output directory settings at their defaults; Vercel detects the Flask application in `src/main.py`.
+3. Add `API` in **Project Settings → Environment Variables** if you want to enable note translation.
+4. Deploy the project.
+
+The Vercel function stores SQLite at `/tmp/app.db` because the deployed application filesystem is not writable. This is temporary, instance-local storage: notes may disappear after a restart or deployment and may not be shared between function instances. Use this setup for testing only; it does not provide reliable note persistence.
+
+The Flask application serves both the frontend and API. Do not add a catch-all rewrite to a single function path: that would make Flask receive the rewritten path instead of routes such as `/api/notes`.
 
 ## 🔧 Configuration
 
